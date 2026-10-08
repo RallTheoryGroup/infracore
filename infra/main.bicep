@@ -7,7 +7,7 @@ resource st 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   sku: { name: 'Standard_LRS' }
   properties: {
     supportsHttpsTrafficOnly: true
-    minimumTlsVersion: 'TLS1_2'
+    minimumTlsVersion: 'TLS1_0'
     allowBlobPublicAccess: false
     publicNetworkAccess: 'Disabled'
     networkAcls: { defaultAction: 'Deny' }
