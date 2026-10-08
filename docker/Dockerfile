@@ -1,7 +1,5 @@
 FROM node:22-alpine
 RUN rm -rf /usr/local/lib/node_modules /opt/yarn-* \
-  /usr/local/bin/npm /usr/local/bin/npx \
-  /usr/local/bin/corepack /usr/local/bin/yarn*
+  /usr/local/bin/np* /usr/local/bin/corepack /usr/local/bin/yarn*
 USER node
-WORKDIR /home/node
 CMD ["node", "--version"]

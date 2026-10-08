@@ -1,9 +1,5 @@
 file: infra/main.json
 framework: arm
-check:
-  - CKV_AZURE_3    # HTTPS only
-  - CKV_AZURE_35   # deny network access by default
-  - CKV_AZURE_44   # minimum TLS 1.2
-  - CKV_AZURE_59   # no public network access
+check: [CKV_AZURE_3, CKV_AZURE_35, CKV_AZURE_44, CKV_AZURE_59]
 output: [cli, sarif]
 output-file-path: console,checkov.sarif
