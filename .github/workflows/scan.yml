@@ -1,13 +1,10 @@
 name: InfraCore scans
 on:
-  push:
-    branches: [main]
+  push: { branches: [main] }
   pull_request:
-
 permissions:
   contents: read
   security-events: write
-
 jobs:
   scan:
     runs-on: ubuntu-24.04
