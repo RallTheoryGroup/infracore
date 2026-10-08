@@ -1,0 +1,37 @@
+name: InfraCore scans
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: docker build -t infracore:ci docker
+      - name: Trivy image scan (v0.36.0, pinned)
+        uses:
+          aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          version: v0.71.1
+          image-ref: infracore:ci
+          severity: HIGH,CRITICAL
+          limit-severities-for-sarif: true
+          exit-code: '1'
+          format: sarif
+          output: trivy.sarif
+      - name: Checkov policy on the compiled Bicep
+        if: ${{ !cancelled() }}
+        run: |
+          az bicep build -f infra/main.bicep
+          pip install -q checkov==3.2.495
+          checkov --config-file .checkov.yaml
+      - uses: github/codeql-action/upload-sarif@v4
+        if: ${{ !cancelled() }}
+        with:
+          sarif_file: .
